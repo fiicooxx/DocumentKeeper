@@ -15,7 +15,7 @@ namespace Infrastructure.Data
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer(
-                "DATA SOURCE=localhost\\SQLEXPRESS;DATABASE=Lab6StudiaToken;Integrated Security=true;TrustServerCertificate=True");
+                "DATA SOURCE=MSI\\SQLEXPRESS;DATABASE=DocumentKeeper;Integrated Security=true;TrustServerCertificate=True");
         }
         public DbSet<Document> Documents { get; set; }
     }
