@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using ApplicationCore.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,5 +19,7 @@ namespace Infrastructure.Data
             optionsBuilder.UseSqlServer(
                 "DATA SOURCE=localhost\\SQLEXPRESS;DATABASE=Lab6StudiaToken;Integrated Security=true;TrustServerCertificate=True");
         }
+
+        public DbSet<Document> Documents { get; set; }
     }
 }
