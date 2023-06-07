@@ -1,0 +1,38 @@
+﻿@page
+@model Web.Pages.Documents.EditModel
+
+<h1>Edit Document</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="Document.Id" />
+
+    <div class="form-group">
+        <label>Title:</label>
+        <input asp-for="Document.Title" class="form-control" />
+        <span asp-validation-for="Document.Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>File Type:</label>
+        <input asp-for="Document.FileType" class="form-control" />
+        <span asp-validation-for="Document.FileType" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Description:</label>
+        <textarea asp-for="Document.Description" class="form-control"></textarea>
+        <span asp-validation-for="Document.Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Status:</label>
+        <select asp-for="Document.Status" class="form-control">
+            <option value="Public">Public</option>
+            <option value="Private">Private</option>
+            <option value="Confidential">Confidential</option>
+        </select>
+        <span asp-validation-for="Document.Status" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

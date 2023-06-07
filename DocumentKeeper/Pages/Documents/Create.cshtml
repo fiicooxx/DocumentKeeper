@@ -1,0 +1,38 @@
+﻿@page
+@model Web.Pages.Documents.CreateModel
+@{
+    ViewData["Title"] = "Create Document";
+}
+
+<h1>Create Document</h1>
+
+@if (ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-success">
+        Document created successfully.
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label asp-for="Document.Title" class="control-label">Title</label>
+                <input asp-for="Document.Title" class="form-control" />
+                <span asp-validation-for="Document.Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DocumentFile" class="control-label">Document</label>
+                <input asp-for="DocumentFile" type="file" class="form-control-file" />
+                <span asp-validation-for="DocumentFile" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

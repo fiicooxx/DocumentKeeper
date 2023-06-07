@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "DocumentKeeper\Web.csproj", "{24487E73-9A38-4D3A-AE9F-FE2B45CFA3FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "DocumentKeeper\Web.csproj", "{24487E73-9A38-4D3A-AE9F-FE2B45CFA3FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastucture\Infrastructure.csproj", "{9638E0C4-AF18-4A9D-A098-98F921ED9DCF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastucture\Infrastructure.csproj", "{9638E0C4-AF18-4A9D-A098-98F921ED9DCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationCore", "ApplicationCore\ApplicationCore.csproj", "{BACF513D-67E6-4A7A-9C6E-F832CC3643E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationCore", "ApplicationCore\ApplicationCore.csproj", "{BACF513D-67E6-4A7A-9C6E-F832CC3643E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{6D574905-0E81-4E1E-9606-E5BA63AADE74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{6D574905-0E81-4E1E-9606-E5BA63AADE74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

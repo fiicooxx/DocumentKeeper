@@ -13,6 +13,8 @@ namespace ApplicationCore.Models
         [Key]
         public int Id { get; set; }
 
+        public byte[] Content { get; set; }
+
         [Required]
         public string Title { get; set; }
 

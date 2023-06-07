@@ -1,0 +1,15 @@
+﻿@page
+@model Web.Pages.Documents.DeleteModel
+
+<h1>Delete Document</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="Document.Id" />
+
+    <div class="alert alert-warning">
+        Are you sure you want to delete the document with the ID @Model.Document.Id?
+    </div>
+
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-page="Index" class="btn btn-secondary">Cancel</a>
+</form>
