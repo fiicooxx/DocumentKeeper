@@ -1,26 +1,24 @@
 ﻿@page
 @model Web.Pages.Documents.IndexModel
 
-<h1>List of Documents</h1>
+<h1>Document List</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>File Type</th>
-            <th>Description</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
+@if (Model.Documents == null || Model.Documents.Count() == 0)
+{
+    <p>No documents found.</p>
+}
+else
+{
+    <ul>
         @foreach (var document in Model.Documents)
         {
-            <tr>
-                <td>@document.Title</td>
-                <td>@document.FileType</td>
-                <td>@document.Description</td>
-                <td>@document.Status</td>
-            </tr>
+            <li>
+                <!-- Wyświetlanie danych dokumentu -->
+                <h2>@document.Title</h2>
+                <p>@document.Description</p>
+                <p>Created by: @document.CreatedBy</p>
+                <p>Status: @document.Status</p>               
+            </li>
         }
-    </tbody>
-</table>
+    </ul>
+}

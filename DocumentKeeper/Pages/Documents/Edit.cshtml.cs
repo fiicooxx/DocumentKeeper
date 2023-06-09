@@ -38,7 +38,6 @@ namespace Web.Pages.Documents
             }
 
             _documentRepository.UpdateDocument(Document);
-
             return RedirectToPage("Index");
         }
     }
