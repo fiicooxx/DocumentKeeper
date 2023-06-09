@@ -13,11 +13,11 @@ namespace Infrastructure.Repositories
             _context = new ApplicationDbContext();
         }
 
-        public List<Document> AddDocument(Document document)
+        public Document AddDocument(Document document)
         {
             _context.Documents.Add(document);
             _context.SaveChanges();
-            return _context.Documents.ToList();
+            return document;
         }
 
         public List<Document> GetAllDocuments()
@@ -25,14 +25,17 @@ namespace Infrastructure.Repositories
             return _context.Documents.ToList();
         }
 
-        public List<Document> GetDocumentById(int id)
+        public Document GetDocumentById(int id)
         {
-            return _context.Documents.Where(d => d.Id == id).ToList();
+            // zwracanie listy w tym przypadku zbędne
+            // return _context.Documents.Where(d => d.Id == id).ToList();
+            // bardziej optymalne:
+            return _context.Documents.FirstOrDefault(d => d.Id == id);
         }
 
-        public List<Document> UpdateDocument(int id, Document document)
+        public List<Document> UpdateDocument(Document document)
         {
-            var existingDocument = _context.Documents.Find(id);
+            var existingDocument = _context.Documents.Find(document.Id);
             if (existingDocument != null)
             {
                 existingDocument.Title = document.Title;
@@ -44,15 +47,20 @@ namespace Infrastructure.Repositories
             return _context.Documents.ToList();
         }
 
-        public List<Document> DeleteDocument(int id)
+        public void DeleteDocument(int id)
         {
             var document = _context.Documents.Find(id);
             if (document != null)
             {
-                _context.Remove(document);
+                _context.Documents.Remove(document);
+                _context.SaveChanges();
             }
+        }
+
+        public void DeleteDocument(List<Document> documents)
+        {
+            _context.Documents.RemoveRange(documents);
             _context.SaveChanges();
-            return _context.Documents.ToList();
         }
     }
 }
