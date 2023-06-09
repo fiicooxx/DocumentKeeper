@@ -9,10 +9,11 @@ namespace Infrastructure.Interfaces
 {
     public interface IDocumentRepository
     {
-        Task<IEnumerable<Document>> GetAllDocuments();
-        Task<Document> GetDocumentById(int id);
-        bool AddDocument(Document document);
-        bool UpdateDocument(int id);
-        bool DeleteDocument(int id);
+        List<Document> AddDocument(Document document);
+        List<Document> GetAllDocuments();
+        List<Document> GetDocumentById(int id);
+        List<Document> UpdateDocument(int id, Document document);
+        List<Document> DeleteDocument(int id);
+        void DeleteDocument(List<Document> document);
     }
 }

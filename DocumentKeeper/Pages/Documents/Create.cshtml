@@ -1,38 +1,36 @@
 ﻿@page
 @model Web.Pages.Documents.CreateModel
-@{
-    ViewData["Title"] = "Create Document";
-}
 
 <h1>Create Document</h1>
 
-@if (ViewData.ModelState.IsValid)
-{
-    <div class="alert alert-success">
-        Document created successfully.
+<form method="post">
+    <div class="form-group">
+        <label>Title:</label>
+        <input asp-for="Document.Title" class="form-control" />
+        <span asp-validation-for="Document.Title" class="text-danger"></span>
     </div>
-}
 
-<div class="row">
-    <div class="col-md-6">
-        <form method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label asp-for="Document.Title" class="control-label">Title</label>
-                <input asp-for="Document.Title" class="form-control" />
-                <span asp-validation-for="Document.Title" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="DocumentFile" class="control-label">Document</label>
-                <input asp-for="DocumentFile" type="file" class="form-control-file" />
-                <span asp-validation-for="DocumentFile" class="text-danger"></span>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Create</button>
-        </form>
+    <div class="form-group">
+        <label>File Type:</label>
+        <input asp-for="Document.FileType" class="form-control" />
+        <span asp-validation-for="Document.FileType" class="text-danger"></span>
     </div>
-</div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+    <div class="form-group">
+        <label>Description:</label>
+        <textarea asp-for="Document.Description" class="form-control"></textarea>
+        <span asp-validation-for="Document.Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Status:</label>
+        <select asp-for="Document.Status" class="form-control">
+            <option value="Public">Public</option>
+            <option value="Private">Private</option>
+            <option value="Confidential">Confidential</option>
+        </select>
+        <span asp-validation-for="Document.Status" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

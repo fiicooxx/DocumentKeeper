@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Infrastructure.Repositories;
 using ApplicationCore.Models;
 using Infrastructure.Interfaces;
-using System.Reflection.Metadata;
 
 namespace Web.Pages.Documents
 {
@@ -16,10 +15,14 @@ namespace Web.Pages.Documents
             _documentRepository = documentRepository;
         }
 
+        [BindProperty]
+        public Document Document { get; set; }
+
         public IActionResult OnGet(int id)
         {
-            var document = _documentRepository.GetDocumentById(id);
-            if (document == null)
+            Document = _documentRepository.GetDocumentById(id);
+
+            if (Document == null)
             {
                 return NotFound();
             }
@@ -27,15 +30,14 @@ namespace Web.Pages.Documents
             return Page();
         }
 
-        public IActionResult OnPost(int id)
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-            var document = _documentRepository.GetDocumentById(id);
 
-            _documentRepository.UpdateDocument(document);
+            _documentRepository.UpdateDocument(Document);
 
             return RedirectToPage("Index");
         }

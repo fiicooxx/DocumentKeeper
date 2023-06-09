@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Infrastructure.Repositories;
+using ApplicationCore.Models;
 using Infrastructure.Interfaces;
 
 namespace Web.Pages.Documents
@@ -9,6 +10,8 @@ namespace Web.Pages.Documents
     {
         private readonly IDocumentRepository _documentRepository;
 
+        public Document Document { get; set; }
+
         public DeleteModel(IDocumentRepository documentRepository)
         {
             _documentRepository = documentRepository;
@@ -16,9 +19,9 @@ namespace Web.Pages.Documents
 
         public IActionResult OnGet(int id)
         {
-            var document = _documentRepository.GetDocumentById(id);
+            Document = _documentRepository.GetDocumentById(id);
 
-            if (document == null)
+            if (Document == null)
             {
                 return NotFound();
             }
@@ -28,14 +31,14 @@ namespace Web.Pages.Documents
 
         public IActionResult OnPost(int id)
         {
-            var document = _documentRepository.GetDocumentById(id);
+            Document = _documentRepository.GetDocumentById(id);
 
-            if (document == null)
+            if (Document == null)
             {
                 return NotFound();
             }
 
-            _documentRepository.DeleteDocument(document);
+            _documentRepository.DeleteDocument(id);
 
             return RedirectToPage("Index");
         }
