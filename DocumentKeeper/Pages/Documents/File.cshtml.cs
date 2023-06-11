@@ -1,49 +1,44 @@
+using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Linq;
 
 namespace Web.Pages.Documents
 {
     public class FileModel : PageModel
     {
         public string FileName { get; set; }
-        public long FileSize { get; set; }
-        public string FileContent { get; set; }
 
         public IActionResult OnGet(string fileName)
         {
-            // TODO: Pobraæ informacje o pliku na podstawie nazwy pliku z bazy danych
-
             // pobranie informacji o pliku
-            var file = GetFileByName(fileName);
+            var fileModel = GetFileByName(fileName);
 
-            if (file == null)
+            if (fileModel == null)
             {
                 return NotFound();
             }
 
-            FileName = file.FileName;
-            FileSize = file.FileSize;
-            FileContent = file.FileContent;
+            FileName = fileModel.FileName;
 
             return Page();
         }
 
         private FileModel GetFileByName(string fileName)
         {
-            // TODO: Pobraæ informacje o pliku na podstawie nazwy pliku z bazy danych
+            var dbContext = new ApplicationDbContext();
+            var fileEntity = dbContext.Documents.FirstOrDefault(f => f.Title == fileName);
 
-            if (fileName == "example.txt")
+            if (fileEntity != null)
             {
-                return new FileModel
+                var fileModel = new FileModel
                 {
-                    FileName = "Example Name",
-                    FileSize = 1024,
-                    FileContent = "Lorem ipsum"
+                    FileName = fileEntity.Title
                 };
+                return fileModel;
             }
 
             return null;
         }
-
     }
 }
