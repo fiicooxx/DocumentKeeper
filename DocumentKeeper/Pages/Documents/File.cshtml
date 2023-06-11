@@ -1,0 +1,20 @@
+﻿@page
+@model Web.Pages.Documents.FileModel
+@{
+    ViewData["Title"] = "File";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <!-- Dodatkowe informacje na temat pliku -->
+    <h3>File Details</h3>
+    <p>File Name: @Model.FileName</p>
+    <p>File Size: @Model.FileSize</p>
+</div>
+
+<div>
+    <!-- Jak ogarniemy logike pobierania i załączania plików to tu trzeba będzie coś zmienić raczej -->
+    <h3>File Content</h3>
+    <p>@Model.FileContent</p>
+</div>
