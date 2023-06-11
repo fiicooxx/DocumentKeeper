@@ -2,6 +2,8 @@ using Infrastructure.Repositories;
 using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Infrastructure.Data;
+using Web;
+using ApplicationCore.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
