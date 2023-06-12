@@ -10,8 +10,9 @@ namespace Infrastructure.Repositories
     public class DocumentRepository : IDocumentRepository
     {
         private readonly ApplicationDbContext _context;
-        public DocumentRepository(DbContextOptions<ApplicationDbContext> options)
+        public DocumentRepository(ApplicationDbContext context)
         {
+            _context = context;
         }
         public Document AddDocument(Document document)
         {
