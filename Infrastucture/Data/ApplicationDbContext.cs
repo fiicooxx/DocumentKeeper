@@ -18,6 +18,8 @@ namespace Infrastructure.Data
 
         public DbSet<Document> Documents { get; set; }
 
+        public DbSet<OperationHistory> OperationHistories { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

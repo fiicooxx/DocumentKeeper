@@ -2,6 +2,7 @@
 using ApplicationCore.Models;
 using Infrastructure.Data;
 using Infrastructure.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -27,9 +28,6 @@ namespace Infrastructure.Repositories
 
         public Document GetDocumentById(int id)
         {
-            // zwracanie listy w tym przypadku zbędne
-            // return _context.Documents.Where(d => d.Id == id).ToList();
-            // bardziej optymalne:
             return _context.Documents.FirstOrDefault(d => d.Id == id);
         }
 
@@ -61,6 +59,12 @@ namespace Infrastructure.Repositories
         {
             _context.Documents.RemoveRange(documents);
             _context.SaveChanges();
+        }
+
+        public Document SearchDocumentsByTitle(string title)
+        {
+            // Logika wyszukiwania dokumentów po tytule
+            return (Document)_context.Documents.Where(d => d.Title.Contains(title));
         }
     }
 }

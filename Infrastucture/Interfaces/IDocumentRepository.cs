@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,5 +29,7 @@ namespace Infrastructure.Interfaces
         // zaś ta lista
         void DeleteDocument(int id);
         void DeleteDocument(List<Document> documents);
+
+        Document SearchDocumentsByTitle(string title);
     }
 }

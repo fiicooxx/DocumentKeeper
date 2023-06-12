@@ -1,0 +1,31 @@
+﻿@page
+@model Web.Pages.Documents.OperationHistoryModel
+@{
+    ViewData["Title"] = "Historia operacji";
+}
+
+<h1>Historia operacji</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>ID dokumentu</th>
+            <th>Typ operacji</th>
+            <th>Użytkownik</th>
+            <th>Data i czas</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var operation in Model.OperationHistories)
+        {
+            <tr>
+                <td>@operation.Id</td>
+                <td>@operation.DocumentId</td>
+                <td>@operation.Type</td>
+                <td>@operation.UserId</td>
+                <td>@operation.Timestamp</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,47 @@
+﻿@page
+@model SearchModel
+@{
+    ViewData["Title"] = "Wyszukiwanie dokumentów";
+}
+
+<h1>Wyszukiwanie dokumentów</h1>
+
+<form method="get">
+    <div class="form-group">
+        <label for="searchQuery">Szukaj:</label>
+        <input type="text" id="searchQuery" name="SearchQuery" class="form-control" value="@Model.SearchQuery" />
+    </div>
+    <button type="submit" class="btn btn-primary">Szukaj</button>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.SearchQuery))
+{
+    <h2>Wyniki wyszukiwania</h2>
+
+    @if (Model.SearchResults.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tytuł</th>
+                    <th>Opis</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var document in Model.SearchResults)
+                {
+                    <tr>
+                        <td>@document.Id</td>
+                        <td>@document.Title</td>
+                        <td>@document.Description</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Brak wyników dla zapytania: "@Model.SearchQuery"</p>
+    }
+}
