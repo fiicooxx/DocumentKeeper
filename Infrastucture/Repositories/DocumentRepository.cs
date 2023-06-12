@@ -3,17 +3,16 @@ using ApplicationCore.Models;
 using Infrastructure.Data;
 using Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Infrastructure.Repositories
 {
     public class DocumentRepository : IDocumentRepository
     {
         private readonly ApplicationDbContext _context;
-        public DocumentRepository()
+        public DocumentRepository(DbContextOptions<ApplicationDbContext> options)
         {
-            _context = new ApplicationDbContext();
         }
-
         public Document AddDocument(Document document)
         {
             _context.Documents.Add(document);
