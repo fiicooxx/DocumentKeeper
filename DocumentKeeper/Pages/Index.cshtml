@@ -1,24 +1,40 @@
 ﻿@page
 @model Web.Pages.Documents.IndexModel
 
-<h1>Document List</h1>
-
-@if (Model.Documents == null || Model.Documents.Count() == 0)
-{
-    <p>No documents found.</p>
+@{
+    ViewData["Title"] = "Lista dokumentów";
 }
-else
-{
-    <ul>
+
+<h1>Lista dokumentów</h1>
+
+<p>
+    <a asp-page="Documents/Create" class="btn btn-primary">Dodaj nowy dokument</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tytuł</th>
+            <th>Opis</th>
+            <th>Status</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
         @foreach (var document in Model.Documents)
         {
-            <li>
-                <!-- Wyświetlanie danych dokumentu -->
-                <h2>@document.Title</h2>
-                <p>@document.Description</p>
-                <p>Created by: @document.CreatedBy</p>
-                <p>Status: @document.Status</p>               
-            </li>
+            <tr>
+                <td>@document.Id</td>
+                <td>@document.Title</td>
+                <td>@document.Description</td>
+                <td>@document.Status</td>
+                <td>
+                    <a asp-page="Documents/Edit" asp-route-id="@document.Id" class="btn btn-primary">Edytuj</a>
+                    <a asp-page="Documents/Download" asp-route-id="@document.Id" class="btn btn-primary">Pobierz</a>
+                    <a asp-page="Documents/Delete" asp-route-id="@document.Id" class="btn btn-danger">Usuń</a>
+                </td>
+            </tr>
         }
-    </ul>
-}
+    </tbody>
+</table>

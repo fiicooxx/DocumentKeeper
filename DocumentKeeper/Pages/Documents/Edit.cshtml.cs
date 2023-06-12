@@ -38,7 +38,7 @@ namespace Web.Pages.Documents
             }
 
             _documentRepository.UpdateDocument(Document);
-            return RedirectToPage("Index");
+            return RedirectToPage("../Index");
         }
     }
 }

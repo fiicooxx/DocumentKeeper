@@ -40,7 +40,7 @@ namespace Web.Pages.Documents
 
             _documentRepository.DeleteDocument(id);
 
-            return RedirectToPage("Index");
+            return RedirectToPage("../Index");
         }
     }
 }

@@ -51,7 +51,7 @@ namespace Web.Pages.Documents
                 }
             }
 
-            return RedirectToPage("Create");
+            return RedirectToPage("../Index");
         }
     }
 }

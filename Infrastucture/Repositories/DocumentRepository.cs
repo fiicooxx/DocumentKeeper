@@ -4,6 +4,8 @@ using Infrastructure.Data;
 using Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.VisualBasic.FileIO;
+using System.IO;
 
 namespace Infrastructure.Repositories
 {
@@ -37,7 +39,6 @@ namespace Infrastructure.Repositories
             if (existingDocument != null)
             {
                 existingDocument.Title = document.Title;
-                existingDocument.FileType = document.FileType;
                 existingDocument.Description = document.Description;
                 existingDocument.Status = document.Status;
             }
