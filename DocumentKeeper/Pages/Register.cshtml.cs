@@ -3,66 +3,79 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 
-namespace Web.Pages
+public class RegisterModel : PageModel
 {
-    public class RegisterModel : PageModel
+    private readonly UserManager<IdentityUser> _userManager;
+    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
+
+    public RegisterModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager)
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        _userManager = userManager;
+        _signInManager = signInManager;
+        _roleManager = roleManager;
+    }
 
-        public RegisterModel(UserManager<IdentityUser> userManager)
-        {
-            _userManager = userManager;
-        }
+    [BindProperty]
+    [Required(ErrorMessage = "Email is required.")]
+    [EmailAddress(ErrorMessage = "Invalid email address.")]
+    public string Email { get; set; }
 
-        [BindProperty]
-        public InputModel Input { get; set; }
+    [BindProperty]
+    [Required(ErrorMessage = "Password is required.")]
+    [DataType(DataType.Password)]
+    [MinLength(6, ErrorMessage = "Password must be at least 6 characters long.")]
+    public string Password { get; set; }
 
-        public class InputModel
-        {
-            [Required]
-            public string Username { get; set; }
+    [BindProperty]
+    [Required(ErrorMessage = "Confirm Password is required.")]
+    [DataType(DataType.Password)]
+    [Compare("Password", ErrorMessage = "Password and Confirm Password must match.")]
+    public string ConfirmPassword { get; set; }
 
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; }
+    [BindProperty]
+    public string Role { get; set; }
 
-            [Required]
-            [DataType(DataType.Password)]
-            public string Password { get; set; }
-        }
+    public IActionResult OnGet()
+    {
+        return Page();
+    }
 
-        public IActionResult OnGet()
+    public IActionResult OnPost()
+    {
+        if (!ModelState.IsValid)
         {
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        var user = new IdentityUser
         {
-            if (!ModelState.IsValid)
+            UserName = Email,
+            Email = Email
+        };
+
+        var result = _userManager.CreateAsync(user, Password).Result;
+
+        if (result.Succeeded)
+        {
+            if (!_roleManager.RoleExistsAsync(Role).Result)
             {
-                return Page();
+                var role = new IdentityRole(Role);
+                _roleManager.CreateAsync(role).Wait();
             }
 
-            var user = new IdentityUser
-            {
-                UserName = Input.Username,
-                Email = Input.Email
-            };
+            _userManager.AddToRoleAsync(user, Role).Wait();
+            _signInManager.SignInAsync(user, isPersistent: false).Wait();
 
-            var result = await _userManager.CreateAsync(user, Input.Password);
-            if (result.Succeeded)
-            {
-                //TODO: LoginPage
-                return RedirectToPage("Login");
-            }
-            else
-            {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-                return Page();
-            }
+            return RedirectToPage("/Index");
         }
+
+        foreach (var error in result.Errors)
+        {
+            ModelState.AddModelError(string.Empty, error.Description);
+        }
+
+        return Page();
     }
 }
+
