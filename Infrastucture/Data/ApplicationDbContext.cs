@@ -1,29 +1,31 @@
 ﻿using ApplicationCore.Models;
 using Infrastructure.Entities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
     public class ApplicationDbContext : IdentityDbContext<UserEntity, UserRole, int>
     {
-        public DbSet<UserEntity> Users { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer(
-                "DATA SOURCE=fclap;DATABASE=DocumentKeeper;Integrated Security=true;TrustServerCertificate=True");
-        }
-        public DbSet<Document> Documents { get; set; }
-
         public ApplicationDbContext()
         {
+        }
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
+        }
+
+        public DbSet<Document> Documents { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Data Source=REIWAI;Initial Catalog=DocumentKeeper;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+            }
+
+            base.OnConfiguring(optionsBuilder);
         }
     }
 }

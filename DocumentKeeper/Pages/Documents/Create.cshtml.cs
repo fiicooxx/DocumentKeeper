@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Infrastructure.Repositories;
 using ApplicationCore.Models;
 using Infrastructure.Interfaces;
+using System.IO;
 
 namespace Web.Pages.Documents
 {
@@ -18,6 +20,9 @@ namespace Web.Pages.Documents
         [BindProperty]
         public Document Document { get; set; }
 
+        [BindProperty]
+        public IFormFile DocumentFile { get; set; }
+
         public IActionResult OnGet()
         {
             return Page();
@@ -28,6 +33,17 @@ namespace Web.Pages.Documents
             if (!ModelState.IsValid)
             {
                 return Page();
+            }
+
+            if (DocumentFile != null && DocumentFile.Length > 0)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    DocumentFile.CopyTo(memoryStream);
+                    Document.Content = memoryStream.ToArray();
+                    Document.Title = DocumentFile.FileName;
+                    Document.FileType = DocumentFile.ContentType;
+                }
             }
 
             _documentRepository.AddDocument(Document);
