@@ -12,7 +12,6 @@ namespace Infrastructure.Interfaces
         // (zmiana)List<Document> AddDocument(Document document);
         // To nie ma być lista tylko pojedynczy obiekt , więc niech AddDocument zwraca pojedynczy dokument
         Document AddDocument(Document document);
-
         // bez zmian
         List<Document> GetAllDocuments();
 
