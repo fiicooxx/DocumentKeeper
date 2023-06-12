@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Infrastructure.Repositories;
@@ -18,7 +19,7 @@ namespace Web.Pages.Documents
         [BindProperty]
         public Document Document { get; set; }
 
-        public IActionResult OnGet(int id) // Przekazujemy identyfikator dokumentu do edycji
+        public IActionResult OnGet(int id)
         {
             Document = _documentRepository.GetDocumentById(id);
             if (Document == null)
@@ -36,15 +37,22 @@ namespace Web.Pages.Documents
                 return Page();
             }
 
-            // Aktualizuj istniej¹cy dokument
             var existingDocument = _documentRepository.GetDocumentById(Document.Id);
             if (existingDocument == null)
             {
                 return NotFound();
             }
 
-            existingDocument.Title = Document.Title;
-            existingDocument.Description = Document.Description;
+            if (Document != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    existingDocument.Title = Document.Title;
+                    existingDocument.Description = Document.Description;
+                    existingDocument.Status = Document.Status;
+                    existingDocument.Content = memoryStream.ToArray();
+                }
+            }
 
             _documentRepository.UpdateDocument(existingDocument);
 

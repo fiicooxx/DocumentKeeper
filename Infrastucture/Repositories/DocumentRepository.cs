@@ -53,7 +53,6 @@ namespace Infrastructure.Repositories
             return _context.Documents.ToList();
         }
 
-        
         public Document SearchDocumentsByTitle(string title)
         {
             // Logika wyszukiwania dokumentów po tytule

@@ -3,30 +3,32 @@
 
 <h1>Edit Document</h1>
 
-<form method="post">
-    <input type="hidden" asp-for="Document.Id" />
+@if (Model.Document != null)
+{
+    <form method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Document.Id" />
 
-    <div class="form-group">
-        <label>Title:</label>
-        <input asp-for="Document.Title" class="form-control" />
-        <span asp-validation-for="Document.Title" class="text-danger"></span>
-    </div>
+        <div>
+            <label>Title:</label>
+            <input type="text" asp-for="Document.Title" />
+        </div>
+        <div>
+            <label>Description:</label>
+            <textarea asp-for="Document.Description"></textarea>
+        </div>
+        <div>
+            <label>Status:</label>
+            <select asp-for="Document.Status">
+                <option value="Public">Public</option>
+                <option value="Private">Private</option>
+                <option value="Internal">Internal</option>
+            </select>
+        </div>
 
-    <div class="form-group">
-        <label>Description:</label>
-        <textarea asp-for="Document.Description" class="form-control"></textarea>
-        <span asp-validation-for="Document.Description" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label>Status:</label>
-        <select asp-for="Document.Status" class="form-control">
-            <option value="Public">Public</option>
-            <option value="Private">Private</option>
-            <option value="Confidential">Confidential</option>
-        </select>
-        <span asp-validation-for="Document.Status" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Save</button>
-</form>
+        <button type="submit" name="saveChanges">Save Changes</button>
+    </form>
+}
+else
+{
+    <p>Document not found.</p>
+}
