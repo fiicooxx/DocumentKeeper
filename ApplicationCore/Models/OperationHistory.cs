@@ -11,8 +11,7 @@ namespace ApplicationCore.Models
     {
         public int Id { get; set; }
         public int DocumentId { get; set; }
-        public OperationType Type { get; set; }
-        public string UserId { get; set; }
+        public DocumentOperationType Type { get; set; }
         public DateTime Timestamp { get; set; }
     }
 }

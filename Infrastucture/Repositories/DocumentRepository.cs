@@ -19,6 +19,13 @@ namespace Infrastructure.Repositories
         public Document AddDocument(Document document)
         {
             _context.Documents.Add(document);
+            var operation = new OperationHistory
+            {
+                DocumentId = document.Id,
+                Type = DocumentOperationType.Add,
+                Timestamp = DateTime.Now
+            };
+            _context.OperationHistories.Add(operation);
             _context.SaveChanges();
             return document;
         }
@@ -59,6 +66,13 @@ namespace Infrastructure.Repositories
             if (document is null)
                 return null;
             _context.Documents.Remove(document);
+            var operation = new OperationHistory
+            {
+                DocumentId = document.Id,
+                Type = DocumentOperationType.Delete,
+                Timestamp = DateTime.Now
+            };
+            _context.OperationHistories.Add(operation);
             _context.SaveChanges();
             return _context.Documents.ToList();
                 

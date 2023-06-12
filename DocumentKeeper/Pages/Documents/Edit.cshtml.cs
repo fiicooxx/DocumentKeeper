@@ -12,7 +12,7 @@ namespace Web.Pages.Documents
 
         public EditModel(IDocumentRepository documentRepository)
         {
-            _documentRepository = documentRepository;
+            _documentRepository = documentRepository ?? throw new ArgumentNullException(nameof(documentRepository));
         }
 
         [BindProperty]
@@ -37,7 +37,17 @@ namespace Web.Pages.Documents
                 return Page();
             }
 
-            _documentRepository.UpdateDocument(Document);
+            try
+            {
+                _documentRepository.UpdateDocument(Document);
+            }
+            catch (Exception ex)
+            {
+                // Obs³u¿ wyj¹tek podczas aktualizacji dokumentu
+                // np. przez zalogowanie, zwrócenie odpowiedniego widoku z komunikatem o b³êdzie itp.
+                return RedirectToPage("../Error");
+            }
+
             return RedirectToPage("../Index");
         }
     }

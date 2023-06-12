@@ -8,7 +8,6 @@ using System.Data;
 
 namespace Web.Pages.Documents
 {
-    [Authorize(Roles = "Admin")]
     public class OperationHistoryModel : PageModel
     {
         private readonly ApplicationDbContext _context;

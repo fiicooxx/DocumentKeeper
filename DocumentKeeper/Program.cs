@@ -18,6 +18,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
+//builder.Services.AddAuthentication("MyAuthenticationScheme")
+//    .AddCookie("MyAuthenticationScheme", options =>
+//    {
+//        // Konfiguracje schematu uwierzytelniania Cookie
+//        options.Cookie.Name = "MyAppCookie";
+//        options.LoginPath = "/Account/Login";
+//    });
+
 
 var app = builder.Build();
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Enums
 {
-    public enum OperationType
+    public enum DocumentOperationType
     {
         Edit,
         Download,
