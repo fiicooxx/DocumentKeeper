@@ -1,55 +1,34 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
 
-namespace Web.Pages
+public class LoginModel : PageModel
 {
-    public class LoginModel : PageModel
+    private readonly SignInManager<IdentityUser> _signInManager;
+
+    public LoginModel(SignInManager<IdentityUser> signInManager)
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
+        _signInManager = signInManager;
+    }
 
-        public LoginModel(SignInManager<IdentityUser> signInManager)
+    [BindProperty]
+    public string Email { get; set; }
+
+    [BindProperty]
+    public string Password { get; set; }
+
+    public IActionResult OnPost()
+    {
+        var result = _signInManager.PasswordSignInAsync(Email, Password, false, lockoutOnFailure: false).Result;
+
+        if (result.Succeeded)
         {
-            _signInManager = signInManager;
+            return RedirectToPage("/Index");
         }
-
-        [BindProperty]
-        public InputModel Input { get; set; }
-
-        public class InputModel
+        else
         {
-            [Required]
-            public string Username { get; set; }
-
-            [Required]
-            [DataType(DataType.Password)]
-            public string Password { get; set; }
-        }
-
-        public IActionResult OnGet()
-        {
+            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, false, lockoutOnFailure: false);
-
-            if (result.Succeeded)
-            {
-                return RedirectToPage("/Index");
-            }
-            else
-            {
-                ViewData["ErrorMessage"] = "Invalid login attempt.";
-                return Page();
-            }
         }
     }
 }

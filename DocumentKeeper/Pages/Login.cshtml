@@ -1,24 +1,23 @@
 ﻿@page
-@model Web.Pages.LoginModel
+@model LoginModel
 @{
     ViewData["Title"] = "Login";
 }
 
-<h1>Login</h1>
-
-@if (ViewData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">@ViewData["ErrorMessage"]</div>
-}
+<h2>Login</h2>
 
 <form method="post">
-    <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" class="form-control" id="username" name="Username">
+    <div asp-validation-summary="All"></div>
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
     </div>
-    <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" class="form-control" id="password" name="Password">
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" />
+        <span asp-validation-for="Password"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Login</button>
+    <button type="submit">Login</button>
 </form>
+
