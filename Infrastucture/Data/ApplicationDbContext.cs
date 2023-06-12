@@ -1,10 +1,11 @@
 ﻿using ApplicationCore.Models;
+using Infrastructure.Data.Entity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -13,7 +14,6 @@ namespace Infrastructure.Data
         }
 
         public DbSet<Document> Documents { get; set; }
-
         public DbSet<OperationHistory> OperationHistories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -27,8 +27,7 @@ namespace Infrastructure.Interfaces
 
         // (zmiana) List<Document> DeleteDocument(int id);
         // zaś ta lista
-        void DeleteDocument(int id);
-        void DeleteDocument(List<Document> documents);
+        List<Document> DeleteDocument(int id);  
 
         Document SearchDocumentsByTitle(string title);
     }

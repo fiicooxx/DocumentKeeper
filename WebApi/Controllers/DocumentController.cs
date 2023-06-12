@@ -51,19 +51,19 @@ namespace WebApi.Controllers
         {
             var result = _repository.UpdateDocument(document);
             if (result == null)
-                return NotFound("Hero not found");
+                return NotFound("Document not found");
 
             return Ok(result);
         }
 
-        //[HttpDelete]
-        //[Route("{id}")]
-        //public async Task<ActionResult<List<Document>>> DeleteDocument(int id)
-        //{
-        //    var result = _repository.DeleteDocument(id);
-        //    if (result == null)
-        //        return NotFound();
-        //    return Ok(result);
-        //}
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<ActionResult<List<Document>>> DeleteDocument(int id)
+        {
+            var result = _repository.DeleteDocument(id);
+            if (result == null)
+                return NotFound();
+            return Ok(result);
+        }
     }
 }

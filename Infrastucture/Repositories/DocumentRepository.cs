@@ -45,26 +45,22 @@ namespace Infrastructure.Repositories
             return _context.Documents.ToList();
         }
 
-        public void DeleteDocument(int id)
-        {
-            var document = _context.Documents.Find(id);
-            if (document != null)
-            {
-                _context.Documents.Remove(document);
-                _context.SaveChanges();
-            }
-        }
-
-        public void DeleteDocument(List<Document> documents)
-        {
-            _context.Documents.RemoveRange(documents);
-            _context.SaveChanges();
-        }
-
+        
         public Document SearchDocumentsByTitle(string title)
         {
             // Logika wyszukiwania dokumentów po tytule
             return (Document)_context.Documents.Where(d => d.Title.Contains(title));
+        }
+
+        public List<Document> DeleteDocument(int id)
+        {
+            var document = _context.Documents.Find(id);
+            if (document is null)
+                return null;
+            _context.Documents.Remove(document);
+            _context.SaveChanges();
+            return _context.Documents.ToList();
+                
         }
     }
 }
