@@ -5,6 +5,7 @@ using Infrastructure.Repositories;
 using ApplicationCore.Models;
 using Infrastructure.Interfaces;
 using System.IO;
+using ApplicationCore.Enums;
 
 namespace Web.Pages.Documents
 {
@@ -30,24 +31,27 @@ namespace Web.Pages.Documents
 
         public IActionResult OnPost()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
             if (DocumentFile != null && DocumentFile.Length > 0)
             {
                 using (var memoryStream = new MemoryStream())
                 {
                     DocumentFile.CopyTo(memoryStream);
-                    Document.Content = memoryStream.ToArray();
-                    Document.Title = DocumentFile.FileName;
-                    Document.FileType = DocumentFile.ContentType;
+                    var document = new Document
+                    {
+                        Title = DocumentFile.FileName,
+                        FileType = DocumentFile.ContentType,
+                        Content = memoryStream.ToArray(),
+                        Description = "dsadasd",
+                        CreationDate = DateTime.Now,
+                        Status = DocumentStatus.Public,
+                        CreatedBy = "admin"
+                    };
+
+                    _documentRepository.AddDocument(document);
                 }
             }
 
-            _documentRepository.AddDocument(Document);
-            return RedirectToPage("Index");
+            return RedirectToPage("Create");
         }
     }
 }
