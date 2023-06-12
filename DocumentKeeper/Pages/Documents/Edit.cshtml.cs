@@ -12,16 +12,15 @@ namespace Web.Pages.Documents
 
         public EditModel(IDocumentRepository documentRepository)
         {
-            _documentRepository = documentRepository ?? throw new ArgumentNullException(nameof(documentRepository));
+            _documentRepository = documentRepository;
         }
 
         [BindProperty]
         public Document Document { get; set; }
 
-        public IActionResult OnGet(int id)
+        public IActionResult OnGet(int id) // Przekazujemy identyfikator dokumentu do edycji
         {
             Document = _documentRepository.GetDocumentById(id);
-
             if (Document == null)
             {
                 return NotFound();
@@ -37,16 +36,17 @@ namespace Web.Pages.Documents
                 return Page();
             }
 
-            try
+            // Aktualizuj istniej¹cy dokument
+            var existingDocument = _documentRepository.GetDocumentById(Document.Id);
+            if (existingDocument == null)
             {
-                _documentRepository.UpdateDocument(Document);
+                return NotFound();
             }
-            catch (Exception ex)
-            {
-                // Obs³u¿ wyj¹tek podczas aktualizacji dokumentu
-                // np. przez zalogowanie, zwrócenie odpowiedniego widoku z komunikatem o b³êdzie itp.
-                return RedirectToPage("../Error");
-            }
+
+            existingDocument.Title = Document.Title;
+            existingDocument.Description = Document.Description;
+
+            _documentRepository.UpdateDocument(existingDocument);
 
             return RedirectToPage("../Index");
         }

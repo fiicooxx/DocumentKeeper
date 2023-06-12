@@ -41,7 +41,7 @@ namespace Web.Pages.Documents
                         Title = DocumentFile.FileName,
                         FileType = DocumentFile.ContentType,
                         Content = memoryStream.ToArray(),
-                        Description = "dsadasd",
+                        Description = Document.Description,
                         CreationDate = DateTime.Now,
                         Status = DocumentStatus.Public,
                         CreatedBy = "admin"

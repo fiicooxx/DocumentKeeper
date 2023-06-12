@@ -13,6 +13,10 @@
         <span asp-validation-for="Document.Title" class="text-danger"></span>
     </div>*@
     <div class="form-group">
+        <div>
+            <label>Description:</label>
+            <textarea asp-for="Document.Description"></textarea>
+        </div>
         <label asp-for="DocumentFile"></label>
         <input type="file" class="form-control-file" asp-for="DocumentFile" />
         <span asp-validation-for="DocumentFile" class="text-danger"></span>
