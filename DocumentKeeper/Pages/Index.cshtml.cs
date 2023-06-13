@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Infrastructure.Repositories;
 using ApplicationCore.Models;
 using Infrastructure.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Pages.Documents
 {
@@ -20,6 +21,16 @@ namespace Web.Pages.Documents
         public void OnGet()
         {
             Documents = _documentRepository.GetAllDocuments();
+        }
+        public async Task<IActionResult> OnGetSortByTitleAsyncAsc()
+        {
+            Documents = _documentRepository.GetAllDocumentsSortedByTitleAsc();
+            return Page();
+        }
+        public async Task<IActionResult> OnGetSortByTitleAsyncDesc()
+        {
+            Documents = _documentRepository.GetAllDocumentsSortedByTitleDesc();
+            return Page();
         }
     }
 }

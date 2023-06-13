@@ -74,6 +74,15 @@ namespace Infrastructure.Repositories
         {
             return _context.Documents.Where(d => d.Title.Contains(title)).ToList();
         }
+
+        public List<Document> GetAllDocumentsSortedByTitleAsc()
+        {
+            return _context.Documents.OrderBy(d => d.Title).ToList();
+        }
+        public List<Document> GetAllDocumentsSortedByTitleDesc()
+        {
+            return _context.Documents.OrderByDescending(d => d.Title).ToList();
+        }
     }
 }
 

@@ -30,5 +30,7 @@ namespace Infrastructure.Interfaces
         List<Document> DeleteDocument(int id);
 
         List<Document> SearchDocumentsByTitle(string title);
+        List<Document> GetAllDocumentsSortedByTitleAsc();
+        List<Document> GetAllDocumentsSortedByTitleDesc();
     }
 }
