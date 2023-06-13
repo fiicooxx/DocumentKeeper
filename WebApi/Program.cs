@@ -27,6 +27,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 
 builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
