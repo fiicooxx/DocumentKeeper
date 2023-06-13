@@ -7,63 +7,26 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [Route("api/v1/documents")]
     public class DocumentController : Controller
     {
+        private readonly IDocumentRepository _documentRepository;
 
-        private readonly IDocumentRepository _repository;
-
-        public DocumentController(IDocumentRepository repository)
+        public DocumentController(IDocumentRepository documentRepository)
         {
-            _repository = repository;
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<Document>> AddDocument(Document document)
-        {
-            var result = _repository.AddDocument(document);
-            return Ok(result);
+            _documentRepository = documentRepository;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Document>>> GetAllDocuments()
+        public IEnumerable<DocumentDto> GetAllDocuments()
         {
-            return _repository.GetAllDocuments();
-        }
-
-
-        [HttpGet]
-        [Route("{id}")]
-        public async Task<ActionResult<Document>> GetDocumentById(int id)
-        {
-            var result = _repository.GetDocumentById(id);
-            if (result == null)
+            var allDocuments = _documentRepository.GetAllDocuments();
+            List<DocumentDto> documentDtos = new();
+            foreach (var documentDto in allDocuments)
             {
-                return NotFound();
+                documentDtos.Add(DocumentDto.Of(documentDto));
             }
-            return Ok(result);
-        }
-
-        [HttpPut]
-        [Route("{id}")]
-        public async Task<ActionResult<List<Document>>> UpdateDocument(Document document)
-        {
-            var result = _repository.UpdateDocument(document);
-            if (result == null)
-                return NotFound("Document not found");
-
-            return Ok(result);
-        }
-
-        [HttpDelete]
-        [Route("{id}")]
-        public async Task<ActionResult<List<Document>>> DeleteDocument(int id)
-        {
-            var result = _repository.DeleteDocument(id);
-            if (result == null)
-                return NotFound();
-            return Ok(result);
+            return documentDtos;
         }
     }
 }
