@@ -7,10 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Pages.Documents
 {
-<<<<<<< HEAD
-    [Authorize(Roles = "admin")]
-=======
->>>>>>> 1fa96197d9a5957064c93f778d2ca5306f99f010
     public class DeleteModel : PageModel
     {
         private readonly IDocumentRepository _documentRepository;
