@@ -19,6 +19,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
+        [Route("getall")]
         public IEnumerable<DocumentDto> GetAllDocuments()
         {
             var allDocuments = _documentRepository.GetAllDocuments();
@@ -29,7 +30,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("getby/{id}")]
         public ActionResult<DocumentDto> GetDocumentById(int id)
         {
             var document = _documentRepository.GetDocumentById(id);
@@ -39,7 +40,22 @@ namespace WebApi.Controllers
                 return NotFound();
         }
 
+        [HttpGet]
+        [Route("search")]
+        public ActionResult<List<DocumentDto>> SearchDocumentsByTitle(string title)
+        {
+            var documents = _documentRepository.SearchDocumentsByTitle(title);
+            var documentDtos = new List<DocumentDto>();
+            foreach (var document in documents)
+            {
+                documentDtos.Add(DocumentDto.Of(document));
+            }
+            return documentDtos;
+        }
+
+
         [HttpPost]
+        [Route("create")]
         public ActionResult<DocumentDto> CreateDocument([FromBody] DocumentDto documentDto)
         {
             if (ModelState.IsValid)
@@ -65,5 +81,20 @@ namespace WebApi.Controllers
             return BadRequest(); 
         }
 
+        [HttpDelete]
+        [Route("delete/{id}")]
+        public ActionResult<DocumentDto> DeleteDocument(int id)
+        {
+            var document = _documentRepository.GetDocumentById(id);
+            if (document == null)
+            {
+                return NotFound();
+            }
+
+            _documentRepository.DeleteDocument(id);
+
+            var documentDto = DocumentDto.Of(document);
+            return Ok(documentDto);
+        }
     }
 }
