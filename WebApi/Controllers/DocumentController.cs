@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Models;
+﻿using ApplicationCore.Enums;
+using ApplicationCore.Models;
 using Azure.Core;
 using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +37,32 @@ namespace WebApi.Controllers
                 return Ok(DocumentDto.Of(document));
             else
                 return NotFound();
+        }
+
+        [HttpPost]
+        public ActionResult<DocumentDto> CreateDocument([FromBody] DocumentDto documentDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var document = new Document
+                {
+                    Id = documentDto.Id,
+                    Content = documentDto.Content,
+                    Title = documentDto.Title,
+                    FileType = documentDto.FileType,
+                    Description = documentDto.Description,
+                    CreationDate = DateTime.Now,
+                    CreatedBy = "Admin",
+                    Status = DocumentStatus.Public
+                };
+
+                var createdDocument = _documentRepository.AddDocument(document);
+                var createdDocumentDto = DocumentDto.Of(createdDocument);
+
+                return Ok(createdDocumentDto); // Zwracanie utworzonego dokumentu w formie DocumentDto
+            }
+
+            return BadRequest(); 
         }
 
     }
