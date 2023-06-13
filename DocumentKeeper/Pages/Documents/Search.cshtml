@@ -1,40 +1,44 @@
 ﻿@page
-@model SearchModel
-@{
-    ViewData["Title"] = "Wyszukiwanie dokumentów";
-}
+@model Web.Pages.Documents.SearchModel
 
-<h1>Wyszukiwanie dokumentów</h1>
+<h1>Search Documents</h1>
 
 <form method="get">
     <div class="form-group">
-        <label for="searchQuery">Szukaj:</label>
-        <input type="text" id="searchQuery" name="SearchQuery" class="form-control" value="@Model.SearchQuery" />
+        <label for="searchInput">Search Title:</label>
+        <input type="text" id="searchInput" name="title" class="form-control" />
     </div>
-    <button type="submit" class="btn btn-primary">Szukaj</button>
+    <button type="submit" class="btn btn-primary">Search</button>
 </form>
 
-@if (!string.IsNullOrEmpty(Model.SearchQuery))
+@if (Model.Documents != null)
 {
-    <h2>Wyniki wyszukiwania</h2>
-
-    @if (Model.SearchResults.Any())
+    <h2>Search Results:</h2>
+    @if (Model.Documents.Count > 0)
     {
         <table class="table">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Tytuł</th>
-                    <th>Opis</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var document in Model.SearchResults)
+                @foreach (var document in Model.Documents)
                 {
                     <tr>
                         <td>@document.Id</td>
                         <td>@document.Title</td>
                         <td>@document.Description</td>
+                        <td>@document.Status</td>
+                        <td>
+                            <a asp-page="Edit" asp-route-id="@document.Id" class="btn btn-primary">Edit</a>
+                            <a asp-page="Download" asp-route-id="@document.Id" class="btn btn-primary">Download</a>
+                            <a asp-page="Delete" asp-route-id="@document.Id" class="btn btn-danger">Delete</a>
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -42,6 +46,6 @@
     }
     else
     {
-        <p>Brak wyników dla zapytania: "@Model.SearchQuery"</p>
+        <p>No documents found.</p>
     }
 }

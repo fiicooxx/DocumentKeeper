@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Pages.Documents
 {
-    [Authorize()]
     public class DeleteModel : PageModel
     {
         private readonly IDocumentRepository _documentRepository;

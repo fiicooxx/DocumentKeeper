@@ -53,12 +53,6 @@ namespace Infrastructure.Repositories
             return _context.Documents.ToList();
         }
 
-        public Document SearchDocumentsByTitle(string title)
-        {
-            // Logika wyszukiwania dokumentów po tytule
-            return (Document)_context.Documents.Where(d => d.Title.Contains(title));
-        }
-
         public List<Document> DeleteDocument(int id)
         {
             var document = _context.Documents.Find(id);
@@ -74,7 +68,11 @@ namespace Infrastructure.Repositories
             _context.OperationHistories.Add(operation);
             _context.SaveChanges();
             return _context.Documents.ToList();
-                
+        }
+
+        public List<Document> SearchDocumentsByTitle(string title)
+        {
+            return _context.Documents.Where(d => d.Title.Contains(title)).ToList();
         }
     }
 }
