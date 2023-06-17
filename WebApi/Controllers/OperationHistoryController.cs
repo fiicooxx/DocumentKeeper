@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace WebApi.Controllers
 {
-    [Route("api/v1/operationhistory")]
+    [Route("api/v1/history")]
     [ApiController]
     public class OperationHistoryController : ControllerBase
     {

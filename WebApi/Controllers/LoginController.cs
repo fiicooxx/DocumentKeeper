@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
-[Route("api/login")]
+[Route("api/v1/login")]
 public class LoginController : ControllerBase
 {
     private readonly SignInManager<IdentityUser> _signInManager;

@@ -19,7 +19,6 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("getall")]
         public IEnumerable<DocumentDto> GetAllDocuments()
         {
             var allDocuments = _documentRepository.GetAllDocuments();
@@ -30,7 +29,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("getby/{id}")]
+        [Route("{id}")]
         public ActionResult<DocumentDto> GetDocumentById(int id)
         {
             var document = _documentRepository.GetDocumentById(id);
@@ -41,7 +40,6 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("search")]
         public ActionResult<List<DocumentDto>> SearchDocumentsByTitle(string title)
         {
             var documents = _documentRepository.SearchDocumentsByTitle(title);
@@ -55,7 +53,6 @@ namespace WebApi.Controllers
 
 
         [HttpPost]
-        [Route("create")]
         public ActionResult<DocumentDto> CreateDocument([FromBody] DocumentDto documentDto)
         {
             if (ModelState.IsValid)
@@ -81,8 +78,34 @@ namespace WebApi.Controllers
             return BadRequest(); 
         }
 
+        [HttpPut]
+        [Route("{id}")]
+        public ActionResult<DocumentDto> EditDocument(int id, [FromBody] DocumentDto documentDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingDocument = _documentRepository.GetDocumentById(id);
+                if (existingDocument == null)
+                {
+                    return NotFound();
+                }
+
+                existingDocument.Title = documentDto.Title;
+                existingDocument.Description = documentDto.Description;
+                existingDocument.Status = documentDto.Status;
+
+                _documentRepository.UpdateDocument(existingDocument);
+
+                var updatedDocumentDto = DocumentDto.Of(existingDocument);
+
+                return Ok(updatedDocumentDto);
+            }
+
+            return BadRequest();
+        }
+
         [HttpDelete]
-        [Route("delete/{id}")]
+        [Route("{id}")]
         public ActionResult<DocumentDto> DeleteDocument(int id)
         {
             var document = _documentRepository.GetDocumentById(id);
