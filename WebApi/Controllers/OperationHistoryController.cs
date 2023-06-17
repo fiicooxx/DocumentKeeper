@@ -7,8 +7,8 @@ using System.Linq;
 
 namespace WebApi.Controllers
 {
-    [Route("api/v1/history")]
     [ApiController]
+    [Route("api/history")]
     public class OperationHistoryController : ControllerBase
     {
         private readonly ApplicationDbContext _context;

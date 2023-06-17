@@ -28,8 +28,7 @@ namespace WebApi.Controllers
             return documentDtos;
         }
 
-        [HttpGet]
-        [Route("{id}")]
+        [HttpGet("{id}")]
         public ActionResult<DocumentDto> GetDocumentById(int id)
         {
             var document = _documentRepository.GetDocumentById(id);
@@ -39,7 +38,7 @@ namespace WebApi.Controllers
                 return NotFound();
         }
 
-        [HttpGet]
+        [HttpGet("search")]
         public ActionResult<List<DocumentDto>> SearchDocumentsByTitle(string title)
         {
             var documents = _documentRepository.SearchDocumentsByTitle(title);
@@ -52,7 +51,7 @@ namespace WebApi.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("create")]
         public ActionResult<DocumentDto> CreateDocument([FromBody] DocumentDto documentDto)
         {
             if (ModelState.IsValid)
@@ -78,8 +77,7 @@ namespace WebApi.Controllers
             return BadRequest(); 
         }
 
-        [HttpPut]
-        [Route("{id}")]
+        [HttpPut("edit/{id}")]
         public ActionResult<DocumentDto> EditDocument(int id, [FromBody] DocumentDto documentDto)
         {
             if (ModelState.IsValid)
@@ -104,8 +102,7 @@ namespace WebApi.Controllers
             return BadRequest();
         }
 
-        [HttpDelete]
-        [Route("{id}")]
+        [HttpDelete("delete/{id}")]
         public ActionResult<DocumentDto> DeleteDocument(int id)
         {
             var document = _documentRepository.GetDocumentById(id);

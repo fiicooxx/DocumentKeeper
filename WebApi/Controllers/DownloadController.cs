@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
 {
-    [Route("api/v1/download")]
     [ApiController]
+    [Route("api/v1/download")]
     public class DownloadController : ControllerBase
     {
         private readonly IDocumentRepository _documentRepository;

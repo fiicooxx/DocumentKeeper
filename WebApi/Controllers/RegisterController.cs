@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
-[Route("api/v1/register")]
+[ApiController]
+[Route("api/register")]
 public class RegisterController : ControllerBase
 {
     private readonly UserManager<IdentityUser> _userManager;
